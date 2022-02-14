@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return 'index';
+        $search = request()->get('search');
+        $users = User::where('name', 'LIKE', '%'.$search.'%')->get();
+        return $users;
     }
 
     /**
@@ -24,7 +27,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        return 'store';
+        $data = $request->get('data');
+        $user = User::firstOrCreate(["email" => $data['email']], $data);
+        /*$user = new User($data);
+        $user->save();*/
+        return $user;
     }
 
     /**
@@ -47,7 +54,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'update';
+        $data = $request->get('data');
+        $user = User::find($id);
+        $user->fill($data)->save();
+        return $user;
     }
 
     /**
