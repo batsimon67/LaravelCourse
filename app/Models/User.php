@@ -24,4 +24,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'json',
     ];
+
+    public function orders() {
+        return $this->hasMany('App\Models\Order', 'user_id', 'id');
+    }
 }

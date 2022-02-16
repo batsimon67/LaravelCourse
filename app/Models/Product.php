@@ -13,4 +13,8 @@ class Product extends Model
 
     protected $table = 'products';
     protected $guarded = [];
+
+    public function orders() {
+        return $this->belongsTo('App\Models\Products', 'id', 'product_id');
+    }
 }
