@@ -20,3 +20,5 @@ use Illuminate\Support\Facades\Route;
 Route::resource('users', UserController::class);
 Route::resource('products', ProductsController::class);
 Route::resource('orders', OrdersController::class);
+Route::get('getProductsDetails/{id}', [UserController::class, 'getProductsDetails']);
+Route::get('checkIfBuyedProduct/{userId}/{productId}', [UserController::class, 'checkIfBuyedProduct']);

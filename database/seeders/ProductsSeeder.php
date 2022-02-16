@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use DB;
 
 class ProductsSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class ProductsSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Product::truncate();
         Product::insert([
             [
@@ -28,5 +30,6 @@ class ProductsSeeder extends Seeder
                 'quantita' => 20,
             ]
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

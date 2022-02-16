@@ -10,7 +10,9 @@ class UserController extends Controller
     public function index()
     {
         $search = request()->get('search');
-        $users = User::where('name', 'LIKE', '%'.$search.'%')->get();
+        $users = User::with('orders')
+            ->where('name', 'LIKE', '%'.$search.'%')
+            ->get();
         return $users;
     }
 
@@ -39,5 +41,20 @@ class UserController extends Controller
     public function destroy($id)
     {
         return User::destroy($id);
+    }
+
+    public function getProductsDetails($user_id) {
+        $results = User::with('orders.products')->get();
+        return $results;
+    }
+
+    public function checkIfBuyedProduct($user_id, $product_id) {
+        $result = User::find($user_id)
+            ->with('orders.products')
+            ->whereHas('orders.products', function($query) use ($product_id) {
+                $query->where('id', $product_id);
+            })
+            ->get();
+        return $result;
     }
 }

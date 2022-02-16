@@ -15,6 +15,6 @@ class Product extends Model
     protected $guarded = [];
 
     public function orders() {
-        return $this->belongsTo('App\Models\Products', 'id', 'product_id');
+        return $this->belongsTo('App\Models\Order', 'id', 'product_id');
     }
 }

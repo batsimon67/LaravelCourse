@@ -15,6 +15,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         User::truncate();
         User::insert([
             [
@@ -31,6 +32,7 @@ class UsersSeeder extends Seeder
                 'eta' => 45
             ]
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Utilizzando la classe generica DB
         /*DB::table('users')->truncate();

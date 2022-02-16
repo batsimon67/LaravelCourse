@@ -37,4 +37,8 @@ class ProductsController extends Controller
     {
         return Product::destroy($id);
     }
+
+    public function getAllBuyers($id) {
+        $result = Product::where('product_id', $id)->with('orders.users')->get();
+    }
 }
