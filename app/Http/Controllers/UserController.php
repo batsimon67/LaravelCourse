@@ -44,7 +44,9 @@ class UserController extends Controller
     }
 
     public function getProductsDetails($user_id) {
-        $results = User::with('orders.products')->get();
+        $results = User::find($user_id)
+            ->with('orders.products')
+            ->first();
         return $results;
     }
 
