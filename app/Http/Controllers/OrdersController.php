@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -13,16 +15,6 @@ class OrdersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -52,15 +44,22 @@ class OrdersController extends Controller
         return $orders;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function consegna() {
+        try {
+            $string = 'CREARE UN\'ENTITÀ VENDITORE CON TUTTI I METODI CRUD';
+            $string2 = 'CHE POSSIEDE PIÙ PRODOTTI';
+            //tips:
+            /*
+             * php artisan make:migration create_NOMETABELLA_table
+             * php artisan migrate
+             * creazione model
+             * creazione route
+             * creazione controller
+             *
+             */
+            return $string.' '.$string2;
+        } catch(\Exception $e)
+            return 'SONO UN\'INCAPACE';
     }
 
     /**
@@ -83,6 +82,23 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //recupero dell'ordine
+        $order = Order::with('users', 'products')->find($id);
+
+        //recupero dei riferimento dell'utente e del prodotto dalle relazioni definite nel modello degli ordini
+        $user = $order->users;
+        $product = $order->products;
+
+        $quantita = $order['quantita'];
+        $prezzo = $order['prezzo'];
+
+        //reincremento il credito dell'utente e la quantità del prodotto
+        $user->credito += $prezzo;
+        $product->quantita += $quantita;
+
+        //salv
+        $user->save();
+        $product->save();
+        $order->delete();
     }
 }
