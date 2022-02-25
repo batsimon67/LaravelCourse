@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -105,4 +106,17 @@ class UserController extends Controller
             return 'Errore! '. $e->getMessage();
         }
     }
+
+    public function getMessages($user_id, $seller_id) {
+        $msg = Message::where('user_id', $user_id)
+            ->where('seller_id', $seller_id)
+            ->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Messaggi recuperati correttamente!',
+            'result' => $msg
+        ], 200);
+
+    }
+
 }
