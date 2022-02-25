@@ -55,11 +55,11 @@ class OrdersController extends Controller
              * creazione model
              * creazione route
              * creazione controller
-             *
              */
             return $string.' '.$string2;
-        } catch(\Exception $e)
+        } catch(\Exception $e) {
             return 'SONO UN\'INCAPACE';
+        }
     }
 
     /**

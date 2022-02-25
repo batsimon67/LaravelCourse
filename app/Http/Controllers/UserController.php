@@ -22,7 +22,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = $request->get('data');
-        $user = User::firstOrCreate(["email" => $data['email']], $data);
+        $user = User::firstOrCreate(["email" => $data['email']]);
         return $user;
     }
 
@@ -51,13 +51,18 @@ class UserController extends Controller
         return $results;
     }
 
-    public function checkIfBuyedProduct($user_id, $product_id) {
-        $result = User::find($user_id)
-            ->with('ordersProduct.products')
-            ->whereHas('orders.products', function($query) use ($product_id) {
-                $query->where('id', $product_id);
-            });
-        return $result;
+    public function checkIfBuyedProduct(Request $request) {
+        try {
+            $data = $request->input();
+            $risultato = User::with(['ordersByProductId' => function($query) use ($data) {
+                $query->where('user_id', $data['user_id'])
+                    ->where('product_id', $data['product_id']);
+            }])
+                ->get();
+            return $risultato;
+        } catch (\Exception $e){
+            return "ERRORE".$e->getFile().$e->getMessage().$e->getLine();
+        }
     }
 
     public function effettuaOrdine(Request $request) {
