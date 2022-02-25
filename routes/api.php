@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,4 @@ Route::prefix('users')->group(function () {
 
 Route::resource('products', ProductsController::class);
 Route::resource('orders', OrdersController::class);
+Route::resource('sellers', SellerController::class);

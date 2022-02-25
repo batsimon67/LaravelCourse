@@ -20,11 +20,13 @@ class ProductsSeeder extends Seeder
         Product::insert([
             [
                 'titolo' => 'Lettiera per gatti',
+                'seller_id' => 1,
                 'descrizione' => 'Lettiera assorbente per gatto irriverente',
                 'prezzo' => 20.50,
                 'quantita' => 3
             ],[
                 'titolo' => 'Macchina per PopCorn',
+                'seller_id' => 2,
                 'descrizione' => 'Bella macchina funzionale',
                 'prezzo' => 49.99,
                 'quantita' => 20,
